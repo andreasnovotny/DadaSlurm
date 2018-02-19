@@ -58,7 +58,7 @@ maxEE_FWD=1 #After truncation, reads with higher than maxEE "expected errors" wi
 maxEE_REV=1
 truncQ=5 #Truncate reads at the first instance of a quality score less than or equal to truncQ
 
-#Rscript ${current_dir}/dada2_pipeline1.R $current_dir $sequence_dir $Truncate_FWD $Truncate_REV $trimLeft_FWD $trimLeft_REV $maxEE_FWD $maxEE_REV $truncQ
+Rscript ${current_dir}/dada2_pipeline1.R $current_dir $sequence_dir $Truncate_FWD $Truncate_REV $trimLeft_FWD $trimLeft_REV $maxEE_FWD $maxEE_REV $truncQ
 
 ##########################################################################################################
 #### 2. Infer Sequence Variants
