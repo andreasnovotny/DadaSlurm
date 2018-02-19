@@ -65,7 +65,7 @@ truncQ=5 #Truncate reads at the first instance of a quality score less than or e
 minOverlap=15 #The minimum length of the overlap required for merging the forward and reverse reads.
 maxMismatch=1 #The maximum mismatches allowed in the overlap region.
 
-#Rscript ${current_dir}/dada2_pipeline2.R $current_dir $sequence_dir $maxMismatch $minOverlap
+Rscript ${current_dir}/dada2_pipeline2.R $current_dir $sequence_dir $maxMismatch $minOverlap
 
 ##########################################################################################################
 #### 3. Merge runs, Remove Chimeras, Assign taxonomy
