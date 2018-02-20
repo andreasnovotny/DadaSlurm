@@ -11,7 +11,7 @@
 ##########################################################################################################
 ####                                                                                                  ####
 #### Andreas Novotny, 2018-02                                                                         ####
-#### https://github.com/andreasnovotny/DadaSlurm                                                                            ####
+#### https://github.com/andreasnovotny/DadaSlurm                                                      ####
 ####                                                                                                  ####
 #### Implemented from dada2 pipeline for big data                                                     ####
 #### https://benjjneb.github.io/dada2/bigdata_paired.html                                             ####
@@ -95,17 +95,3 @@ echo 'Finishing the dadaSlurm pipeline 1-4'
 
 ##########################################################################################################
 ##########################################################################################################
-#### EXPLANATIONS: the dada2 package
-
-# The dada2 package is centered around the DADA2 algorithm for accurate high-resolution of sample
-# composition from amplicon sequencing data.  The DADA2 algorithm is both more sensitive and
-# more specific than commonly used OTU methods, and resolves amplicon sequence variants (ASVs)
-# that differ by as little as one nucleotide.
-# Authors:
-# Benjamin Callahan
-# <benjamin.j.callahan@gmail.com>
-# Paul J McMurdie II
-# <mcmurdie@stanford.edu>
-# Michael Rosen
-# <eigenrosen@gmail.com>
-# <susan@stat.stanford.edu>

@@ -50,9 +50,3 @@ saveRDS(fitGTR, file.path(CURRENT_DIR,'phangorn_tree.rds'))
 
 ##########################################################################################################
 ##########################################################################################################
-#### EXPLANATIONS:
-
-# The phangorn R package is used to construct a phylogenetic tree.
-# We first construct a neighbor-joining tree, and then fit a GTR+G+I
-# (Generalized time-reversible with Gamma rate variation)
-# maximum likelihood tree using the neighbor-joining tree as a starting point.

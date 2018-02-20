@@ -37,3 +37,6 @@ metadata <- as.data.frame(metadata2)
 ps <- phyloseq(otu_table(seqtab, taxa_are_rows=FALSE), sample_data(metadata), tax_table(taxonomy))
 
 saveRDS(ps, file.path(CURRENT_DIR,'phyloseq.rds'))
+
+##########################################################################################################
+##########################################################################################################
