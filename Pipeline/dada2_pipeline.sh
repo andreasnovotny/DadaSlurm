@@ -1,6 +1,6 @@
 #!/bin/bash -l
 
-#SBATCH -A snic2017-7-248
+#SBATCH -A snic201X-X-xxx
 #SBATCH -p core
 #SBATCH -n 16
 #SBATCH -t 6:00:00
@@ -20,8 +20,7 @@
 ##########################################################################################################
 ##########################################################################################################
 
-# Copy to uppmax:
-scp /home/novotny/Desktop/DadaSlurm/Pipeline/dada2*  novotny@rackham.uppmax.uu.se:/proj/snic2017-7-248/nobackup/private/andreas/P9607/testrn20
+# Copy to uppmax:     $ scp PATH/TO/dada2_pipeline*  USERNAME@rackham.uppmax.uu.se:/proj/snic2017-x-xxx/nobackup/DIRECTORY
 # Start by using:     $ sbatch dada2_pipeline.sh
 # Stop by using:      $ scancel JOBID
 # Monitor by using:   $ jobinfo -u USERNAME
