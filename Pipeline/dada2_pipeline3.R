@@ -5,7 +5,7 @@
 ##########################################################################################################
 ####                                                                                                  ####
 #### Andreas Novotny, 2018-02                                                                         ####
-#### andreas.novotny@su.se                                                                            ####
+#### https://github.com/andreasnovotny/DadaSlurm                                                                        ####
 ####                                                                                                  ####
 #### Implemented from dada2 pipeline for big data                                                     ####
 #### https://benjjneb.github.io/dada2/bigdata_paired.html                                             ####

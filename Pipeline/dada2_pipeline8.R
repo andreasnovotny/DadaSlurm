@@ -1,7 +1,7 @@
 #!/bin/Rscript -l
 
 ##########################################################################################################
-############### DADA2 PIPELINE 4: Create Phyloseq Object #################################################
+############### DADA2 PIPELINE 8 : Ad Phylogeny to Phyloseq ##############################################
 ##########################################################################################################
 ####                                                                                                  ####
 #### Andreas Novotny, 2018-02                                                                         ####
@@ -11,29 +11,16 @@
 ##########################################################################################################
 ##########################################################################################################
 
-library(phyloseq); packageVersion("phyloseq")
+library(phyloseq)
+
+print('R will now ad the tree to the phyloseq object... ...')
 
 args <- commandArgs(TRUE)
 CURRENT_DIR <- args[1]
-METADATA <- args[2]
 
-print('R will now create a Phyloseq object from the results... ...')
+phylogeny <- readRDS(file.path(CURRENT_DIR,'phangorn_tree.rds'))
+ps <- readRDS(file.path(CURRENT_DIR,'phyloseq.rds'))
 
-##########################################################################################################
-# 1. Read in all output files from the pipeline
+ps@phy_tree <- phylogeny$tree
 
-seqtab <- as.matrix(readRDS(file.path(CURRENT_DIR,'seqtab_final.rds')))
-taxonomy <- readRDS(file.path(CURRENT_DIR,'tax_final.rds'))
-taxonomy <- as.matrix(taxonomy$tax)
-
-metadata <- read.csv2(METADATA)
-metadata2 <- metadata[,-1]
-rownames(metadata2) <- metadata[,1]
-metadata <- as.data.frame(metadata2)
-
-##########################################################################################################
-# 2. Create and save the phyloseq object
-
-ps <- phyloseq(otu_table(seqtab, taxa_are_rows=FALSE), sample_data(metadata), tax_table(taxonomy))
-
-saveRDS(ps, file.path(CURRENT_DIR,'phyloseq.rds'))
+saveRDS(ps, paste(CURRENT_DIR,'/phyloseq.rds', sep=""))

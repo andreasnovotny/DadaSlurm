@@ -1,7 +1,13 @@
-#!/bin/Rscript -l
+#!/bin/bash -l
+
+#SBATCH -A snic2017-7-248
+#SBATCH -p core
+#SBATCH -n 1
+#SBATCH -t 48:00:00
+#SBATCH -J dada2_pipeline_5-8
 
 ##########################################################################################################
-############### DADA2 PIPELINE 4: Create Phyloseq Object #################################################
+############### DADA2 PIPELINE 5-8: WORKFLOW FOR PAIR-END ILLUMINA AMPLICONS #############################
 ##########################################################################################################
 ####                                                                                                  ####
 #### Andreas Novotny, 2018-02                                                                         ####
@@ -11,29 +17,29 @@
 ##########################################################################################################
 ##########################################################################################################
 
-library(phyloseq); packageVersion("phyloseq")
+echo 'Running DadaSlurm pipeline 5-8'
 
-args <- commandArgs(TRUE)
-CURRENT_DIR <- args[1]
-METADATA <- args[2]
-
-print('R will now create a Phyloseq object from the results... ...')
+current_dir=$1
 
 ##########################################################################################################
-# 1. Read in all output files from the pipeline
-
-seqtab <- as.matrix(readRDS(file.path(CURRENT_DIR,'seqtab_final.rds')))
-taxonomy <- readRDS(file.path(CURRENT_DIR,'tax_final.rds'))
-taxonomy <- as.matrix(taxonomy$tax)
-
-metadata <- read.csv2(METADATA)
-metadata2 <- metadata[,-1]
-rownames(metadata2) <- metadata[,1]
-metadata <- as.data.frame(metadata2)
+#### 6a. Make fasta file of seqtab sequences (CSVtoFASTA)
+module load python3
+python3 ${current_dir}/dada2_pipeline6.py $current_dir
 
 ##########################################################################################################
-# 2. Create and save the phyloseq object
+#### 6b. Align sequences with MUSCLE
+module load bioinfo-tools
+module load muscle
+muscle -in ${current_dir}/seqs.fa -out ${current_dir}/seqs.afa
 
-ps <- phyloseq(otu_table(seqtab, taxa_are_rows=FALSE), sample_data(metadata), tax_table(taxonomy))
+##########################################################################################################
+#### 7. Build tree with PHANGORN
+module load R_packages/3.4.3
+Rscript ${current_dir}/dada2_pipeline7.R $current_dir
 
-saveRDS(ps, file.path(CURRENT_DIR,'phyloseq.rds'))
+##########################################################################################################
+#### 8. Ad tree to the phyloseq object
+module load R_packages/3.4.3
+Rscript ${current_dir}/dada2_pipeline8.R $current_dir
+
+##########################################################################################################

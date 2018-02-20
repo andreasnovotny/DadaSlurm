@@ -1,7 +1,7 @@
-#!/bin/Rscript -l
+#!/usr/bin/env python3
 
 ##########################################################################################################
-############### DADA2 PIPELINE 4: Create Phyloseq Object #################################################
+############### DADA2 PIPELINE 6a : Convert CSV to FASTA #################################################
 ##########################################################################################################
 ####                                                                                                  ####
 #### Andreas Novotny, 2018-02                                                                         ####
@@ -11,29 +11,31 @@
 ##########################################################################################################
 ##########################################################################################################
 
-library(phyloseq); packageVersion("phyloseq")
+print("Python will now convert CSV sequences to FASTA... ...")
 
-args <- commandArgs(TRUE)
-CURRENT_DIR <- args[1]
-METADATA <- args[2]
+def CSV_to_fasta (input_file, output_file):
+	counter = 0
+	with open (input_file, 'r') as input_file, open (output_file, 'w') as output_file:
+		for row in input_file:
+			if counter == 0:
+				counter += 1
+			else:
+				row_list=row.split(',')
+				sequence=row_list[1]
+				sequence=sequence.replace('\"','')
+				x = ''.join(['>', sequence])
+				output_file.write(x)
+				output_file.write(sequence)
+				output_file.write('\n')
 
-print('R will now create a Phyloseq object from the results... ...')
+if __name__ == '__main__':
+	import sys
+	filepath=sys.argv[1]
+	input_file=''.join([filepath,'/seqs.csv'])
+	output_file=''.join([filepath,'/seqs.fa'])
+
+	CSV_to_fasta(input_file, output_file)
+
 
 ##########################################################################################################
-# 1. Read in all output files from the pipeline
-
-seqtab <- as.matrix(readRDS(file.path(CURRENT_DIR,'seqtab_final.rds')))
-taxonomy <- readRDS(file.path(CURRENT_DIR,'tax_final.rds'))
-taxonomy <- as.matrix(taxonomy$tax)
-
-metadata <- read.csv2(METADATA)
-metadata2 <- metadata[,-1]
-rownames(metadata2) <- metadata[,1]
-metadata <- as.data.frame(metadata2)
-
 ##########################################################################################################
-# 2. Create and save the phyloseq object
-
-ps <- phyloseq(otu_table(seqtab, taxa_are_rows=FALSE), sample_data(metadata), tax_table(taxonomy))
-
-saveRDS(ps, file.path(CURRENT_DIR,'phyloseq.rds'))
