@@ -40,7 +40,7 @@ if(length(fastqFs) != length(fastqRs)) stop("Forward and reverse files do not ma
 
 filterAndTrim(fwd=file.path(pathF, fastqFs), filt=file.path(filtpathF, fastqFs),
               rev=file.path(pathR, fastqRs), filt.rev=file.path(filtpathR, fastqRs),
-              truncLen=c(args[3],args[4]), trimLeft=c(args[5],args[6]), maxEE=c(args[7],args[8]),
+              truncLen=c(args[3],args[4]), trimLeft=c(2,2), maxEE=c(args[7],args[8]),
               truncQ=args[9], maxN=0, rm.phix=TRUE, compress=TRUE, verbose=TRUE, multithread=TRUE)
 
 

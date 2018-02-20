@@ -29,7 +29,7 @@ phang.align <- read.phyDat(file=input_alignment, format="fasta", type="DNA")
 # 3.Create distance matrix
 print('PHANGORN will now create a distande matrix of the aligne sequences... ...')
 dm <- dist.ml(phang.align)
-saveRDS(dm, file_path(CURRENT_DIR,'dm.rds'))
+saveRDS(dm, file.path(CURRENT_DIR,'dm.rds'))
 
 ##########################################################################################################
 # 4.Neighbour joining tree

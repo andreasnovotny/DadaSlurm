@@ -36,7 +36,7 @@ saveRDS(seqtab, file.path(CURRENT_DIR,'seqtab_final.rds'))
 ##########################################################################################################
 #### 3. Assign taxonomy
 
-print("R will noe assignTaxonomy... ...")
+print("R will now assignTaxonomy... ...")
 
 if (args[3]==TRUE) {
   tax <- assignTaxonomy(seqtab, DATABASE, minBoot=args[4],
