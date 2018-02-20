@@ -1,6 +1,6 @@
 #!/bin/bash -l
 
-#SBATCH -A snic201X-x-xxx
+#SBATCH -A snic2017-7-248
 #SBATCH -p core
 #SBATCH -n 16
 #SBATCH -t 6:00:00
@@ -9,7 +9,7 @@
 ##########################################################################################################
 ###############  DADA2 PIPELINE : WORKFLOW FOR PAIR-END ILLUMINA AMPLICONS ###############################
 ##########################################################################################################
-####                                                                                                  ####
+####                                                                                                 ####
 #### Andreas Novotny, 2018-02                                                                         ####
 #### https://github.com/andreasnovotny/DadaSlurm                                                      ####
 ####                                                                                                  ####
@@ -20,7 +20,8 @@
 ##########################################################################################################
 ##########################################################################################################
 
-# Copy to uppmax:     $ scp PATH/TO/dada2_pipeline*  USERNAME@rackham.uppmax.uu.se:/proj/snic2017-x-xxx/nobackup/DIRECTORY
+# Copy to uppmax:
+scp /home/novotny/Desktop/DadaSlurm/Pipeline/dada2*  novotny@rackham.uppmax.uu.se:/proj/snic2017-7-248/nobackup/private/andreas/P9607/testrn20
 # Start by using:     $ sbatch dada2_pipeline.sh
 # Stop by using:      $ scancel JOBID
 # Monitor by using:   $ jobinfo -u USERNAME
@@ -87,7 +88,10 @@ Rscript ${current_dir}/dada2_pipeline4.R $current_dir $metadata
 ##########################################################################################################
 #### 5. Optional: Construct Phylogeny With MUSCLE and PHANGORN
 
-sbatch dada2_pipeline5.sh $current_dir
+# DEFINE YOUR SLURM PROJECT ACCOUNT AGAIN:
+A='snic201X-x-xxx'
+
+sbatch -A $A --export current_dir=$current_dir ${current_dir}/dada2_pipeline5.sh
 
 ##########################################################################################################
 

@@ -2,6 +2,8 @@
 
 WORKFLOW FOR PAIR-END ILLUMINA AMPLICONS
 
+https://github.com/andreasnovotny/DadaSlurm
+
 
 ## Description
 Pipeline based on the tutorial: dada2 pipeline for big data https://benjjneb.github.io/dada2/bigdata_paired.html, streamlined for use on the UPPMAX cluster: https://www.uppmax.uu.se/.
@@ -58,7 +60,9 @@ Monitor by using:   `jobinfo -u USERNAME`
 Andreas Novotny
 2018-02-19
 
-andreas.novotny@su.se
+https://github.com/andreasnovotny
+
+More information canbe found at: http://uppmax.uu.se/support/user-guides/
 
 ### 1. Login
 
@@ -69,6 +73,7 @@ Login using the secure shell command:
 ### 2. Upload and download files in uppmax
 
 *Always run this commands from your lapdop terminal*
+
 
 secure copy
 `scp FROM: TO:`
