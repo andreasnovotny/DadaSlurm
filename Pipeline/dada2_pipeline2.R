@@ -37,6 +37,7 @@ names(filtFs) <- sample.names
 names(filtRs) <- sample.names
 set.seed(100)
 
+saveRDS(sample.names, file.path(CURRENT_DIR, '/sample.names.rds'))
 
 ##########################################################################################################
 #### 2. Learn forward and reverse error rates
@@ -61,10 +62,17 @@ for(sam in sample.names) {
     ddF <- dada(derepF, err=errF, multithread=TRUE)
     derepR <- derepFastq(filtRs[[sam]])
     ddR <- dada(derepR, err=errR, multithread=TRUE)
-    merger <- mergePairs(ddF, derepF, ddR, derepR, maxMismatch=args[3], minOverlap=args[4])
+    merger <- mergePairs(ddF, derepF, ddR, derepR, maxMismatch=1, minOverlap=15)
     mergers[[sam]] <- merger
 }
 rm(derepF); rm(derepR)
+
+getN <- function(x) sum(getUniques(x))
+mergetab <- sapply(mergers, getN)
+saveRDS(mergetab, file.path(CURRENT_DIR, '/mergers.rds'))
+
+
+
 
 
 ##########################################################################################################
@@ -72,6 +80,12 @@ rm(derepF); rm(derepR)
 print("R will now makeSequenceTable... ...")
 seqtab <- makeSequenceTable(mergers)
 saveRDS(seqtab, file.path(CURRENT_DIR,'seqtab.rds'))
+
+
+
+
+
+
 
 
 ##########################################################################################################
