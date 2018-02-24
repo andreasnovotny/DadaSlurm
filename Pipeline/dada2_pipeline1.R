@@ -38,10 +38,14 @@ if(length(fastqFs) != length(fastqRs)) stop("Forward and reverse files do not ma
 ##########################################################################################################
 #### 2. Filter and Trim
 
-filterAndTrim(fwd=file.path(pathF, fastqFs), filt=file.path(filtpathF, fastqFs),
+filtered <- filterAndTrim(fwd=file.path(pathF, fastqFs), filt=file.path(filtpathF, fastqFs),
               rev=file.path(pathR, fastqRs), filt.rev=file.path(filtpathR, fastqRs),
-              truncLen=c(args[3],args[4]), trimLeft=c(2,2), maxEE=c(args[7],args[8]),
-              truncQ=args[9], maxN=0, rm.phix=TRUE, compress=TRUE, verbose=TRUE, multithread=TRUE)
+              truncLen=c(270,250), trimLeft=c(2,2), maxEE=c(1,1), truncQ=0, maxN=0, rm.phix=TRUE,
+              compress=TRUE, verbose=TRUE, multithread=TRUE)
+
+
+
+saveRDS(filtered, file.path(CURRENT_DIR,'/filtered.rds'))
 
 
 

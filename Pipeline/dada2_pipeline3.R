@@ -36,31 +36,23 @@ saveRDS(seqtab, file.path(CURRENT_DIR,'seqtab_final.rds'))
 ##########################################################################################################
 #### 3. Assign taxonomy
 
+#########################################################################################
+#### MODIFY IMPORTANT PARAMETERS IN THE assignTaxonomy FUNCTION!                    #####
+#### https://www.bioconductor.org/packages/release/bioc/manuals/dada2/man/dada2.pdf #####
+#########################################################################################
+
 print("R will now assignTaxonomy... ...")
 
 if (args[3]==TRUE) {
-  tax <- assignTaxonomy(seqtab, DATABASE, minBoot=args[4],
+  tax <- assignTaxonomy(seqtab, DATABASE, minBoot=50,
     outputBootstraps = TRUE,
     taxLevels = c("Kingdom","Supergroup","Division","Class","Order","Family","Genus","Species"),
     multithread=TRUE)
 } else {
-  tax <- assignTaxonomy(seqtab, DATABASE, minBoot=args[4],
+  tax <- assignTaxonomy(seqtab, DATABASE, minBoot=50,
     outputBootstraps = TRUE, multithread=TRUE)
 }
 saveRDS(tax, file.path(CURRENT_DIR,'tax_final.rds'))
-
-##########################################################################################################
-#### 4. Create big RSV table
-seqtab_t <- t(seqtab)
-RSV <- merge(tax, seqtab_t, by=0)
-write.table(RSV, file.path(CURRENT_DIR,'RSV.txt'), sep = '\t')
-
-##########################################################################################################
-#### 5. make text file for MUSCLE alignment
-
-seqs <- getSequences(seqtab)
-write.csv(seqs, file.path(CURRENT_DIR,'seqs.csv'), sep = '\t')
-
 
 ##########################################################################################################
 ##########################################################################################################

@@ -20,8 +20,8 @@ The pipeline is streamlined for use on the UPPMAX computational cluster Rackham.
 1. DADA2::filterAndTrim
 2. DADA2::learnErrors, dada, mergePairs
 3. DADA2::removeBimeraDenovo, assignTaxonomy
-4. Phyloseq::phyloseq
-5. (Bash linking script)
+4. Final output modifications (Incl. Phyloseq)
+5. (Bash linking script - (new slurm job).
 6. MUSCLE alignment
 7. Phangorn::dml, NJ, fit
 8. Phyloseq
@@ -49,7 +49,9 @@ A file-path to a learning database (see dada2 documentation).
 A file-path to a .CSV file with row names corresponding to sequence sample names.
 
 ####  2. Modify the script
-Use the master script: `dada2_pipeline.sh` do monitor the pipeline. Specify required pathways according to the instructions in the script. Several settings can be modified from the `dada2_pipeline.sh` directly and the pipeline can be run without modifying any of the other files.
+Use the master script: `dada2_pipeline.sh` do monitor the pipeline. Specify required pathways according to the instructions in the script.
+
+Modify the default settings of the Dada2 functions in the files `dada2_pipeline1.R` (filterAndTrim), `dada2_pipeline2.R` (mergePairs) and `dada2_pipeline1.R`, (assignTaxonomy).
 
 Different components of the pipeline may be turned off using a `#` sign at the line of the component execution.
 
