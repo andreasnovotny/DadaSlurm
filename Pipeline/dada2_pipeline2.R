@@ -42,6 +42,11 @@ saveRDS(sample.names, file.path(CURRENT_DIR, '/sample.names.rds'))
 ##########################################################################################################
 #### 2. Learn forward and reverse error rates
 
+#########################################################################################
+#### MODIFY IMPORTANT PARAMETERS IN THE learnErrors FUNCTION!                       #####
+#### https://www.bioconductor.org/packages/release/bioc/manuals/dada2/man/dada2.pdf #####
+#########################################################################################
+
 print("R will now run the learnErrors function... ...")
 errF <- learnErrors(filtFs, nread=2e6, multithread=TRUE, randomize=TRUE)
 errR <- learnErrors(filtRs, nread=2e6, multithread=TRUE, randomize=TRUE)
@@ -51,6 +56,11 @@ saveRDS(errR, file.path(CURRENT_DIR,'errR.rds'))
 
 ##########################################################################################################
 #### 3. Sample inference and merger of paired-end reads
+
+#########################################################################################
+#### MODIFY IMPORTANT PARAMETERS IN THE mergePairs FUNCTION!                        #####
+#### https://www.bioconductor.org/packages/release/bioc/manuals/dada2/man/dada2.pdf #####
+#########################################################################################
 
 mergers <- vector("list", length(sample.names))
 names(mergers) <- sample.names

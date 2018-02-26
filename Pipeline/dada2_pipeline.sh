@@ -74,7 +74,7 @@ Rscript ${current_dir}/dada2_pipeline4.R $current_dir $metadata
 ##########################################################################################################
 #### 5. Optional: Construct Phylogeny With MUSCLE and PHANGORN
 
-sbatch -A $A --export=ALL,current_dir=$current_dir ${current_dir}/dada2_pipeline5.sh
+#sbatch -A $A --export=ALL,current_dir=$current_dir ${current_dir}/dada2_pipeline5.sh
 
 ##########################################################################################################
 
