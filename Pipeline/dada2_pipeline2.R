@@ -5,7 +5,7 @@
 ##########################################################################################################
 ####                                                                                                  ####
 #### Andreas Novotny, 2018-02                                                                         ####
-#### https://github.com/andreasnovotny/DadaSlurm                                                                           ####
+#### https://github.com/andreasnovotny/DadaSlurm                                                      ####
 ####                                                                                                  ####
 #### Implemented from dada2 pipeline for big data                                                     ####
 #### https://benjjneb.github.io/dada2/bigdata_paired.html                                             ####
@@ -20,7 +20,7 @@ library(dada2); packageVersion("dada2")
 #### 1. File parsing
 
 args <- commandArgs(TRUE)
-CURRENT_DIR <- args[1]
+OUTPUT_DIR <- args[1]
 INPUT_DIR <- args[2]
 
 filtpathF <- paste(INPUT_DIR,'/FWD/filtered', sep="")
@@ -37,7 +37,7 @@ names(filtFs) <- sample.names
 names(filtRs) <- sample.names
 set.seed(100)
 
-saveRDS(sample.names, file.path(CURRENT_DIR, '/sample.names.rds'))
+saveRDS(sample.names, file.path(OUTPUT_DIR, 'temporary/sample.names.rds'))
 
 ##########################################################################################################
 #### 2. Learn forward and reverse error rates
@@ -48,11 +48,15 @@ saveRDS(sample.names, file.path(CURRENT_DIR, '/sample.names.rds'))
 #########################################################################################
 
 print("R will now run the learnErrors function... ...")
-errF <- learnErrors(filtFs, nread=2e6, multithread=TRUE, randomize=TRUE)
-errR <- learnErrors(filtRs, nread=2e6, multithread=TRUE, randomize=TRUE)
+errF <- learnErrors(filtFs,
+	nread=2e6, #<-----------------------------------------------------------MODIFY!
+	multithread=TRUE, randomize=TRUE)
+errR <- learnErrors(filtRs,
+	nread=2e6, #<-----------------------------------------------------------MODIFY!
+	multithread=TRUE, randomize=TRUE)
 
-saveRDS(errF, file.path(CURRENT_DIR,'errF.rds'))
-saveRDS(errR, file.path(CURRENT_DIR,'errR.rds'))
+saveRDS(errF, file.path(OUTPUT_DIR,'temporary/errF.rds'))
+saveRDS(errR, file.path(OUTPUT_DIR,'temporary/errR.rds'))
 
 ##########################################################################################################
 #### 3. Sample inference and merger of paired-end reads
@@ -72,14 +76,16 @@ for(sam in sample.names) {
     ddF <- dada(derepF, err=errF, multithread=TRUE)
     derepR <- derepFastq(filtRs[[sam]])
     ddR <- dada(derepR, err=errR, multithread=TRUE)
-    merger <- mergePairs(ddF, derepF, ddR, derepR, maxMismatch=1, minOverlap=15)
+    merger <- mergePairs(ddF, derepF, ddR, derepR,
+			maxMismatch=1, #<---------------------------------------------------MODIFY!
+			minOverlap=15) #<---------------------------------------------------MODIFY!
     mergers[[sam]] <- merger
 }
 rm(derepF); rm(derepR)
 
 getN <- function(x) sum(getUniques(x))
 mergetab <- sapply(mergers, getN)
-saveRDS(mergetab, file.path(CURRENT_DIR, '/mergers.rds'))
+saveRDS(mergetab, file.path(OUTPUT_DIR, 'temporary/mergers.rds'))
 
 
 
@@ -89,7 +95,7 @@ saveRDS(mergetab, file.path(CURRENT_DIR, '/mergers.rds'))
 #### 4. Construct sequence table
 print("R will now makeSequenceTable... ...")
 seqtab <- makeSequenceTable(mergers)
-saveRDS(seqtab, file.path(CURRENT_DIR,'seqtab.rds'))
+saveRDS(seqtab, file.path(OUTPUT_DIR,'temporary/seqtab.rds'))
 
 
 

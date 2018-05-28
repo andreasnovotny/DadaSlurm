@@ -5,7 +5,7 @@
 ##########################################################################################################
 ####                                                                                                  ####
 #### Andreas Novotny, 2018-02                                                                         ####
-#### https://github.com/andreasnovotny/DadaSlurm                                                                             ####
+#### https://github.com/andreasnovotny/DadaSlurm                                                      ####
 ####                                                                                                  ####
 #### Implemented from dada2 pipeline for big data                                                     ####
 #### https://benjjneb.github.io/dada2/bigdata_paired.html                                             ####
@@ -21,7 +21,7 @@ library(dada2); packageVersion("dada2")
 ##########################################################################################################
 #### 1. File parsing
 args <- commandArgs(TRUE)
-CURRENT_DIR <- args[1]
+OUTPUT_DIR <- args[1]
 INPUT_DIR <- args[2]
 
 pathF <- paste(INPUT_DIR,'/FWD', sep="")
@@ -38,14 +38,22 @@ if(length(fastqFs) != length(fastqRs)) stop("Forward and reverse files do not ma
 ##########################################################################################################
 #### 2. Filter and Trim
 
-filtered <- filterAndTrim(fwd=file.path(pathF, fastqFs), filt=file.path(filtpathF, fastqFs),
+#########################################################################################
+#### MODIFY IMPORTANT PARAMETERS IN THE filterAndTrim FUNCTION!                     #####
+#### https://www.bioconductor.org/packages/release/bioc/manuals/dada2/man/dada2.pdf #####
+#########################################################################################
+
+filtered <- filterAndTrim(fwd=file.path(pathF, fastqFs),filt=file.path(filtpathF, fastqFs),
               rev=file.path(pathR, fastqRs), filt.rev=file.path(filtpathR, fastqRs),
-              truncLen=c(270,250), trimLeft=c(2,2), maxEE=c(1,1), truncQ=0, maxN=0, rm.phix=TRUE,
-              compress=TRUE, verbose=TRUE, multithread=TRUE)
+							truncLen=c(270,250), #<------------------------------------------------------MODIFY!
+							trimLeft=c(2,2), #<----------------------------------------------------------MODIFY!
+							maxEE=c(1,1), #<-------------------------------------------------------------MODIFY!
+							truncQ=0, #<-----------------------------------------------------------------MODIFY!
+							maxN=0, rm.phix=TRUE, compress=TRUE, verbose=TRUE, multithread=TRUE)
 
 
 
-saveRDS(filtered, file.path(CURRENT_DIR,'/filtered.rds'))
+saveRDS(filtered, file.path(OUTPUT_DIR,'/temporary/filtered.rds'))
 
 
 

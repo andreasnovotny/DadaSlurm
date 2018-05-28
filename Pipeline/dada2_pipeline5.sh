@@ -3,6 +3,7 @@
 #SBATCH -p core
 #SBATCH -n 1
 #SBATCH -t 48:00:00
+#SBATCH -o /proj/snic2017-7-248/nobackup/private/andreas/RD-1794/Outputs/slurm-%j.out
 #SBATCH -J dada2_pipeline_5-8
 
 ##########################################################################################################
